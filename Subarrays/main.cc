@@ -4,6 +4,7 @@ class Solution {
     public:
         int subarraysWithKDistinct(std::vector<int>& nums, int k) {
             std::vector<int> distinctCount(nums.size() + 1, 0);
+            distinctCount.
             int totalCount = 0;
             int left = 0;
             int right = 0;

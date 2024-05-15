@@ -2,6 +2,33 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "type": "java",
+      "name": "Traversals",
+      "request": "launch",
+      "mainClass": "Java.Traversals",
+      "projectName": "LeetCode-Solutions_26ece40b"
+    },
+    {
+      "type": "java",
+      "name": "Tester",
+      "request": "launch",
+      "mainClass": "Java.Tester",
+      "projectName": "LeetCode-Solutions_26ece40b"
+    },
+    {
+      "type": "java",
+      "name": "Launch Java Program",
+      "request": "launch",
+      "mainClass": ""
+    },
+    {
+      "type": "java",
+      "name": "boundedSub",
+      "request": "launch",
+      "mainClass": "Java.boundedSub",
+      "projectName": "LeetCode-Solutions_26ece40b"
+    },
+    {
       "name": "C/C++ Runner: Debug Session",
       "type": "lldb",
       "request": "launch",
