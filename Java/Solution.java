@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
+import javax.swing.tree.TreeNode;
+
 import Java.ListNode;
 
 public class Solution {
@@ -323,6 +325,129 @@ public class Solution {
     Return an integer array answer where answer = [even, odd].
  */
     public int[] evenOddBit(int n) {
-            
+        String binary = Integer.toBinaryString(n);
+        int even_count = 0, odd_count = 0;
+        for(int i = 0; i < binary.length(); ++i) {
+            char c = binary.charAt(i);
+            if(c == '1') {
+                if((binary.length() - 1 - i) % 2 == 0) even_count++;
+                else odd_count++;
+            }
+        }
+        return new int[] { even_count, odd_count } ;
+    }
+
+    /*
+     * You are given the root of a full binary tree with the following properties:
+
+        Leaf nodes have either the value 0 or 1, where 0 represents False and 1 represents True.
+        Non-leaf nodes have either the value 2 or 3, where 2 represents the boolean OR and 3 represents the boolean AND.
+        The evaluation of a node is as follows:
+
+        If the node is a leaf node, the evaluation is the value of the node, i.e. True or False.
+        Otherwise, evaluate the node's two children and apply the boolean operation of its value with the children's evaluations.
+        Return the boolean result of evaluating the root node.
+
+        A full binary tree is a binary tree where each node has either 0 or 2 children.
+
+        A leaf node is a node that has zero children.
+         * Definition for a binary tree node.
+    * public class TreeNode {
+    *     int val;
+    *     TreeNode left;
+    *     TreeNode right;
+    *     TreeNode() {}
+    *     TreeNode(int val) { this.val = val; }
+    *     TreeNode(int val, TreeNode left, TreeNode right) {
+    *         this.val = val;
+    *         this.left = left;
+    *         this.right = right;
+    *     }
+    * }
+     */
+
+     /*
+      * DFS, Rush to bottom of leftmost node, then move up rerunning DFS through the right node
+      */
+    public class TreeNode {
+        int val;
+        TreeNode left, right;
+        TreeNode() {}
+        TreeNode(int val) { this.val = val; }
+        TreeNode(int val, TreeNode left, TreeNode right) {
+            this.val = val;
+            this.left = left;
+            this.right = right;
+        }
+    }
+
+    public boolean evaluateTree(TreeNode root) {
+        if(root.left == null && root.right == null) return root.val != 0;
+
+        boolean leftEval = evaluateTree(root.left);
+        boolean rightEval = evaluateTree(root.right);
+
+        if(root.val == 2) {
+            return leftEval | rightEval;
+        } else {
+            return leftEval && rightEval;
+        }
+    }
+
+    /*
+     * An attendance record for a student can be represented as a string where each character signifies whether the student was absent, late, or present on that day. The record only contains the following three characters:
+
+        'A': Absent.
+        'L': Late.
+        'P': Present.
+        Any student is eligible for an attendance award if they meet both of the following criteria:
+
+        The student was absent ('A') for strictly fewer than 2 days total.
+        The student was never late ('L') for 3 or more consecutive days.
+        Given an integer n, return the number of possible attendance records of length n that make a student eligible for an attendance award. The answer may be very large, so return it modulo 109 + 7.
+
+        
+
+        Example 1:
+
+        Input: n = 2
+        Output: 8
+        Explanation: There are 8 records with length 2 that are eligible for an award:
+        "PP", "AP", "PA", "LP", "PL", "AL", "LA", "LL"
+        Only "AA" is not eligible because there are 2 absences (there need to be fewer than 2).
+        Example 2:
+
+        Input: n = 1
+        Output: 3
+        Example 3:
+
+        Input: n = 10101
+        Output: 183236316
+        
+
+        Constraints:
+
+        1 <= n <= 105
+     */
+    public int checkRecord(int n) {
+        return 0;
+    }
+
+    public String licenseKeyFormatting(String s, int k) {
+        int count = 0;
+        String newKey = "";
+        for(char c : s.toCharArray()) {
+            if(c == '-' && count != k) {
+                count = 0;
+                continue;
+            }
+            if(count == k) {
+                newKey+="-";
+                count = 0;
+            }
+            newKey+=c;
+            count++;
+        }
+        return newKey;
     }
 }
