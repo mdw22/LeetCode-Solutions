@@ -1,5 +1,7 @@
 package Java;
 
+import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -449,5 +451,93 @@ public class Solution {
             count++;
         }
         return newKey;
+    }
+
+    int sum = 0;
+    public void recursiveRange(TreeNode root, int low, int high) {
+        if(root == null) return;
+        if(root.val >= low && root.val <= high) sum += root.val;
+        recursiveRange(root.left, low, high);
+        recursiveRange(root.right, low, high);
+    }
+
+    public int rangeSumBST(TreeNode root, int low, int high) {
+        recursiveRange(root, low, high);
+        return sum;
+    }
+
+    public int numSteps(String s) {
+        int N = s.length();
+        int ops = 0;
+        int carry = 0;
+        for(int i = N - 1; i > 0; i--) {
+            int digit = Character.getNumericValue(s.charAt(i)) + carry;
+            if(digit % 2 == 1) {
+                ops += 2;
+                carry = 1;
+            } else {
+                ops++;
+            }
+        }
+        return ops + carry;
+    }
+
+    
+    public int countTriplets(int[] arr) {
+        int[] prefixXOR = new int[arr.length + 1];
+        prefixXOR[0] = 0;
+        System.arraycopy(arr, 0, prefixXOR, 1, arr.length);
+        int size = prefixXOR.length;
+        int count = 0;
+
+        // Performing XOR operation on the array elements
+        for (int i = 1; i < size; ++i) prefixXOR[i] ^= prefixXOR[i - 1];
+
+        // Maps to store counts and totals of XOR values encountered
+        HashMap<Integer, Integer> countMap = new HashMap<>();
+        HashMap<Integer, Integer> totalMap = new HashMap<>();
+
+        // Iterating through the array
+        for (int i = 0; i < size; ++i) {
+            // Calculating contribution of current element to the result
+            count +=
+            countMap.getOrDefault(prefixXOR[i], 0) * (i - 1) -
+            totalMap.getOrDefault(prefixXOR[i], 0);
+
+            // Updating total count of current XOR value
+            totalMap.put(
+                prefixXOR[i],
+                totalMap.getOrDefault(prefixXOR[i], 0) + i
+            );
+            countMap.put(
+                prefixXOR[i],
+                countMap.getOrDefault(prefixXOR[i], 0) + 1
+            );
+        }
+
+        return count;
+    }
+
+    public int[] singleNumber(int[] nums) {
+        if(nums.length == 2) return nums;
+        ArrayList<Integer> list = new ArrayList<>();
+        for(int i = 0; i < nums.length; ++i) {
+            int curr_num = nums[i];
+            boolean match_found = false;
+            for(int j = 0; j < list.size(); ++j) {
+                if(list.get(j) == curr_num) {
+                    match_found = true;
+                    list.remove(j);
+                }
+            }
+            if(!match_found) {
+                list.add(curr_num);
+            }
+        }
+        int[] result = new int[2];
+        for(int i = 0; i < 2; ++i) {
+            result[i] = list.get(i);
+        }
+        return result;
     }
 }
