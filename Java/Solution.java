@@ -561,4 +561,20 @@ public class Solution {
         Collections.sort(result);
         return result;
     }
+
+    void leafInOrder(TreeNode root, ArrayList<Integer> list) {
+        if(root == null) return; 
+        if(root.left == null && root.right == null) list.add(root.val);
+        leafInOrder(root.left, list);
+        leafInOrder(root.right, list);
+    }
+
+    public boolean leafSimilar(TreeNode root1, TreeNode root2) {
+        ArrayList<Integer> root1_list = new ArrayList<>();
+        ArrayList<Integer> root2_list = new ArrayList<>();
+        leafInOrder(root1, root1_list);
+        leafInOrder(root2, root2_list);
+        if(root1_list.equals(root2_list)) return true;
+        return false;
+    }
 }
