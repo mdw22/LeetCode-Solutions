@@ -602,4 +602,42 @@ public class Solution {
         }
         return t.length() - t_pointer;
     }
+
+    public int romanCharToVal(char c) {
+        switch (c) {
+            case 'I':
+                return 1;
+            case 'V':
+                return 5;
+            case 'X':
+                return 10;
+            case 'L':
+                return 50;
+            case 'C':
+                return 100;
+            case 'D':
+                return 500;
+            default:
+                return 1000;
+        }
+    }
+
+    public int romanToInt(String s) {
+        int curr_largest_val = 1000;
+        int result = 0;
+        for(int i = 0; i < s.length(); ++i) {
+            char c = s.charAt(i);
+            int new_value = romanCharToVal(c);
+            // Subtraction needs to be used
+            if(new_value > curr_largest_val) {
+                result -= curr_largest_val; 
+                result += new_value - curr_largest_val;
+                curr_largest_val = new_value; 
+            } else {
+                result += new_value;
+                curr_largest_val = new_value;
+            }
+        }
+        return result;
+    }
 }
