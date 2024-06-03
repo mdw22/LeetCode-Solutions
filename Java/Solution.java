@@ -593,4 +593,13 @@ public class Solution {
             s[j] = temp;
         }
     }
+
+    public int appendCharacters(String s, String t) {
+        int t_pointer = 0, s_pointer = 0;
+        while(t_pointer < t.length() && s_pointer < s.length()) {
+            if(s.charAt(s_pointer) == t.charAt(t_pointer)) ++t_pointer;
+            s_pointer++;
+        }
+        return t.length() - t_pointer;
+    }
 }
