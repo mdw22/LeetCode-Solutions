@@ -6,10 +6,13 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
+import java.util.Set;
 
 import javax.swing.tree.TreeNode;
 
@@ -638,6 +641,24 @@ public class Solution {
                 curr_largest_val = new_value;
             }
         }
+        return result;
+    }
+
+    public int longestPalindrome(String s) {
+        int result = 0;
+        Map<Character, Integer> freqMap = new HashMap<>();
+        for(char c : s.toCharArray()) {
+            freqMap.put(c, freqMap.getOrDefault(c, 0) + 1);
+        }
+        boolean freqFlag = false;
+        for(int freq : freqMap.values()) {
+            if(freq % 2 == 0) result += freq; 
+            else {
+                result += freq - 1;
+                freqFlag = true;
+            }
+        }
+        if(freqFlag) return result + 1;
         return result;
     }
 }
