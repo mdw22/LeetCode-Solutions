@@ -661,4 +661,22 @@ public class Solution {
         if(freqFlag) return result + 1;
         return result;
     }
+
+    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+        ListNode returnList = new ListNode();
+        ListNode dummyList = returnList; 
+        while(list1 != null && list2 != null) {
+            if(list1.val < list2.val) {
+                dummyList.next = list1;
+                list1 = list1.next;
+            } else {
+                dummyList.next = list2;
+                list2 = list2.next;
+            }
+            dummyList = dummyList.next;
+        }
+        if(list1 != null) dummyList.next = list1;
+        if(list2 != null) dummyList.next = list2; 
+        return returnList.next; 
+    }
 }

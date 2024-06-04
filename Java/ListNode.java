@@ -8,6 +8,13 @@ public class ListNode {
         val = x;
     }
 
+    ListNode() {}
+
+    ListNode(int x, ListNode next) {
+        val = x;
+        this.next = next;
+    }
+
     void addNode(ListNode node) {
         next = node;
     }
