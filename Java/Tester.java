@@ -28,14 +28,14 @@ public class Tester {
     public String randomStringGen(int length) {
         String result = "";
         for(int i = 0; i < length; ++i) {
-            result += (RAND.nextInt(97, 122)) - '0';
+            result += (char)(RAND.nextInt(97, 122));
         }
-        return null;
+        return result;
     }
 
     public static void main(String[] args) {
-        Solution s = new Solution();
-        int result = s.findMaxK(new int[]{-10,8,6,7,-2,-3});
-        System.out.println("Output of the called function : " + result); 
+        Tester t = new Tester();
+        String output = t.randomStringGen(10);
+        System.out.println(output);
     }
 }
