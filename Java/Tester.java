@@ -33,6 +33,37 @@ public class Tester {
         return result;
     }
 
+    // Generates a random set of random strings with given length
+    public String[] randomStringArrGen(int arrlen, int length) {
+        String[] result = new String[arrlen];
+        for(int i = 0; i < arrlen; ++i) {
+            result[i] = randomStringGen(length);
+        }
+        return result;
+    }
+
+    // Generates random values for a listnode tree specified by length
+    public ListNode randomListNodeTree(int length) {
+        ListNode dummy = new ListNode();
+        ListNode result = dummy;
+        for(int i = 0; i < length; ++i) {
+            dummy.next = new ListNode(RAND.nextInt(1000));
+            dummy = dummy.next;
+        }
+        return result.next;
+    }
+
+    // Generates sorted random values for listnode tree specified by length 
+    public ListNode randomSortedListNodeTree(int length) {
+        ListNode dummy = new ListNode();
+        ListNode result = dummy;
+        for(int i = 0; i < length; ++i) {
+            dummy.next = new ListNode(RAND.nextInt(0, i));
+            dummy = dummy.next;
+        }
+        return result.next;
+    }
+
     public static void main(String[] args) {
         Tester t = new Tester();
         String output = t.randomStringGen(10);
