@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
@@ -763,5 +764,48 @@ public class Solution {
         }
 
         return true;
+    }
+
+    public String replaceWords(List<String> dictionary, String sentence) {
+        String[] wordArray = sentence.split(" ");
+        Set<String> dictSet = new HashSet<>(dictionary);
+
+        // Replace each word in sentence with the corresponding shortest root
+        for (int i = 0; i < wordArray.length; i++) {
+            wordArray[i] = shortestRoot(wordArray[i], dictSet);
+        }
+
+        return String.join(" ", wordArray);
+    }
+
+    private String shortestRoot(String word, Set<String> dictSet) {
+        // Find the shortest root of the word in the dictionary
+        for (int i = 1; i <= word.length(); i++) {
+            String root = word.substring(0, i);
+            if (dictSet.contains(root)) {
+                return root;
+            }
+        }
+        // There is not a corresponding root in the dictionary
+        return word;
+    }
+
+    public int subarraysDivByK(int[] nums, int k) {
+        int prefixMod = 0, result = 0;
+
+        // There are k mod groups 0...k-1.
+        int[] modGroups = new int[k];
+        modGroups[0] = 1;
+
+        for (int num: nums) {
+            // Take modulo twice to avoid negative remainders.
+            prefixMod = (prefixMod + num % k + k) % k;
+            // Add the count of subarrays that have the same remainder as the current
+            // one to cancel out the remainders.
+            result += modGroups[prefixMod];
+            modGroups[prefixMod]++;
+        }
+
+        return result;
     }
 }
