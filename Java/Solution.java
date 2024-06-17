@@ -818,4 +818,56 @@ public class Solution {
         }
         return result;
     }
+
+    public int[] relativeSortArray(int[] arr1, int[] arr2) {
+        Map<Integer, Integer> map = new HashMap<>(); 
+        // Map values in arr1
+        for (int i = 0; i < arr1.length; ++i) {
+            map.put(arr1[i], map.getOrDefault(arr1[i], 0) + 1);
+        }
+        // Iterate through arr2, Build array as needed by getting map values
+        int[] result = new int[arr1.length + arr2.length];
+        int index = 0;
+        for (int i = 0; i < arr2.length * 2; ++i) {
+            result[i] = arr2[index];
+            for (int j = 0; j < map.getOrDefault(arr2[i], 0); ++j) {
+                ++i;
+                result[i] = arr2[index];
+            }
+            // Set map value as 0 each time
+            map.put(arr2[i], 0);
+        }
+        return null;
+        
+    }
+
+    public int minMovesToSeat(int[] seats, int[] students) {
+        // Sort both seats and students arrays
+        Arrays.sort(seats);
+        Arrays.sort(students);
+        int result = 0;
+        for(int i = 0; i < seats.length; ++i) {
+            result += Math.abs(seats[i] - students[i]);
+        }
+        return result;
+    }
+
+    public int minIncrementForUnique(int[] nums) {
+        return 0;
+    }
+
+    public boolean judgeSquareSum(int c) {
+        for (int i = 2; i * i <= c; i++) {
+            int count = 0;
+            if (c % i == 0) {
+                while (c % i == 0) {
+                    count++;
+                    c /= i;
+                }
+                if (i % 4 == 3 && count % 2 != 0)
+                    return false;
+            }
+        }
+        return c % 4 != 3;
+    }
 }

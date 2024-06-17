@@ -5,6 +5,7 @@ import Java.Solution;
 
 public class Tester {
     Random RAND = new Random(); 
+    Solution SOL = new Solution();
 
     // Generates a random set of integers with a given size
     public int[] integerArrayGen(int size) {   
@@ -66,7 +67,10 @@ public class Tester {
 
     public static void main(String[] args) {
         Tester t = new Tester();
-        String output = t.randomStringGen(10);
-        System.out.println(output);
+        System.out.println(t.SOL.judgeSquareSum(5));
+        System.out.println(t.SOL.judgeSquareSum(3));
+        System.out.println(t.SOL.judgeSquareSum(12));
+        System.out.println(t.SOL.judgeSquareSum(9));
+        System.out.println(t.SOL.judgeSquareSum(7));
     }
 }
