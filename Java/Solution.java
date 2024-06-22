@@ -870,4 +870,21 @@ public class Solution {
         }
         return c % 4 != 3;
     }
+
+    public int maxProfitAssignment(int[] difficulty, int[] profit, int[] worker) {
+        Map<Integer, Integer> difficultyProfitMap = new HashMap<>();
+        // Fill Map
+        for (int i = 0; i < difficulty.length; ++i) {
+            difficultyProfitMap.put(difficulty[i], profit[i]);
+        }
+        int result = 0;
+        for (int i = 0; i < worker.length; ++i) {
+            int currWorkerDiff = worker[i];
+            while (difficultyProfitMap.getOrDefault(currWorkerDiff, 0) == 0) {
+                currWorkerDiff--;
+            }
+            result += difficultyProfitMap.get(currWorkerDiff);
+        }
+        return result;
+    }
 }
