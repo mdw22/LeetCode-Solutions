@@ -911,4 +911,28 @@ public class Solution {
         }
         return totalImportance;
     }
+
+    public List<List<Integer>> findDifference(int[] nums1, int[] nums2) {
+        List<List<Integer>> result_List = new ArrayList<>();
+        result_List.add(new ArrayList<>());
+        result_List.add(new ArrayList<>());
+        Arrays.sort(nums1);
+        Arrays.sort(nums2);
+        for(int i = 0; i < nums1.length; ++i) {
+            int num = nums1[i];
+            if(i > 0 && num == nums1[i - 1]) continue;
+            result_List.get(0).add(num);
+        }
+        for(int i = 0; i < nums2.length; ++i) {
+            int num = nums2[i];
+            if(i > 0 && num == nums2[i - 1]) continue;
+            if(result_List.get(0).indexOf(num) != -1) {
+                result_List.get(0).remove(result_List.get(0).indexOf(num));
+            }
+            else {
+                result_List.get(1).add(num);
+            }
+        }
+        return result_List;
+    }
 }
