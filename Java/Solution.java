@@ -887,4 +887,28 @@ public class Solution {
         }
         return result;
     }
+
+    public int findCenter(int[][] edges) {
+        int edge_0 = edges[0][0];
+        int edge_1 = edges[0][1];
+        if(edge_0 == edges[1][0] || edge_0 == edges[1][1]) return edge_0;
+        else return edge_1;
+    }
+
+    public long maximumImportance(int n, int[][] roads) {
+        long[] degrees = new long[n];
+
+        for(int edge[] : roads) {
+            degrees[edge[0]]++;
+            degrees[edge[1]]++;
+        }
+        Arrays.sort(degrees);
+        long value = 1;
+        long totalImportance = 0;
+        for(long degree : degrees) {
+            totalImportance += value * degree;
+            value++;
+        }
+        return totalImportance;
+    }
 }

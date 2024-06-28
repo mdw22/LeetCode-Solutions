@@ -15,5 +15,18 @@ class Solution:
             freq[odds] += 1
         
         return ans
-        
-        
+    
+    def sortArrayByParityII(self, nums: List[int]) -> List[int]:
+        evens = []
+        odds = []
+        output = []
+        for num in nums:
+            if(num % 2 == 0):
+                evens.append(num)
+            else:
+                odds.append(num)
+        for i in range(len(evens)):
+            output.append(evens[i])
+            output.append(odds[i])
+        return output
+    
