@@ -1,21 +1,7 @@
 package Java;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.PriorityQueue;
-import java.util.Queue;
-import java.util.Set;
-
+import java.util.*;
 import javax.swing.tree.TreeNode;
 
 import Java.ListNode;
@@ -934,5 +920,142 @@ public class Solution {
             }
         }
         return result_List;
+    }
+
+    public int countElements(int[] nums) {
+        Arrays.sort(nums);
+        int smallest = nums[0];
+        int largest = nums[nums.length - 1];
+        int result = 0;
+        // Iterate between small/large using two pointers
+        for (int i = 1, j = nums.length - 2; i < j; ++i, --j) {
+            if(nums[i] != smallest) result++;
+            if(i != j && nums[j] != largest) result++;
+        }
+        return result;
+    }
+
+    public int[][] construct2DArray(int[] original, int m, int n) {
+        if(m * n < original.length) return new int[][]{}; 
+        int[][] result_Array = new int[m][n];
+        int counter = 0;
+        for(int i = 0; i < m; ++i) {
+            for(int j = 0; j < n; ++j) {
+                result_Array[i][j] = original[counter];
+                ++counter;
+            }
+        }
+        return result_Array;
+    }
+
+    public String makeFancyString(String s) {
+        StringBuilder result = new StringBuilder();
+        char last_char = s.charAt(0);
+        int counter = 0;
+        result.append(s.charAt(0));
+        for(int i = 1; i < s.length(); ++i) {
+            char c = s.charAt(i);
+            if(last_char == c) {
+                counter++;
+            }
+            else {
+                counter = 0;
+            }
+            if(counter < 2) {
+                result.append(c);
+            }
+            last_char = c;
+        }
+        return result.toString();
+    }
+
+    public boolean threeConsecutiveOdds(int[] arr) {
+        int counter = 0;
+        for(int num : arr) {
+            if (num % 2 != 0) {
+                if(counter == 2) {
+                    return true;
+                }
+                counter++;
+            }
+            else {
+                counter = 0;
+            }
+        }
+        return false;
+    }
+
+    public int[] runningSum(int[] nums) {
+        for(int i = 1; i < nums.length; ++i) {
+            nums[i] += nums[i - 1];
+        }
+        return nums;
+    }
+    
+    public List<String> stringMatching(String[] words) {
+        List<String> stringMatching = new LinkedList<>();
+        for(int i = 0; i < words.length; ++i) {
+            String word = words[i];
+            for(int j = 0; j < words.length; ++j) {
+                if(i == j) continue;
+                String comparedWord = words[j];
+                if(comparedWord.contains(word)) {
+                    stringMatching.add(word);
+                }
+            }
+        }
+        return stringMatching;
+    }
+
+    public int[] intersect(int[] nums1, int[] nums2) {
+        Arrays.sort(nums1);
+        Arrays.sort(nums2);
+        // Pointer to nums1, nums2, and index for return array respectivally
+        int p_nums1 = 0, p_nums2 = 0, final_index = 0;
+        while(p_nums1 < nums1.length && p_nums2 < nums2.length) {
+            if(nums1[p_nums1] < nums2[p_nums2]) {
+                ++p_nums1;
+            } else if (nums1[p_nums1] > nums2[p_nums2]) {
+                ++p_nums2;
+            } else {
+                nums1[final_index++] = nums1[p_nums1++];
+                ++p_nums2;
+            }
+        }
+        return Arrays.copyOfRange(nums1, 0, final_index);
+    }
+
+    public ListNode mergeNodes(ListNode head) {
+        ListNode resultHead = new ListNode();
+        ListNode dummyHead = new ListNode();
+        // store pointer to start of ListNode
+        resultHead.next = dummyHead; 
+        while(head != null) {
+            if(head.val == 0) {
+                int result = 0;
+                // zero with no partner found at end of list
+                if(head.next == null) break;
+                head = head.next;
+                // iterate until next zero is found or final node is called
+                while(head.val != 0 && head.next != null) {
+                    result += head.val;
+                    head = head.next;
+                }
+                // if a subsuquent zero is found, take out zero and store result as a listnode
+                if(head.val == 0 && result != 0) {
+                    dummyHead.val = result;
+                } else {
+                    // else, no sub zero is found so break
+                    break;
+                }
+            } else {
+                dummyHead.val = head.val;
+            }
+            if(head.next == null) break;
+            dummyHead.next = new ListNode();
+            dummyHead = dummyHead.next;
+            if(head.val != 0) head = head.next;
+        }
+        return resultHead.next;
     }
 }
