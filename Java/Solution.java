@@ -1098,8 +1098,6 @@ public class Solution {
         }
     }
 
-    
-
     public List<Integer> topStudents(String[] positive_feedback, String[] negative_feedback, String[] report, int[] student_id, int k) {
         List<String> feedback_list = new ArrayList<>();
         Map<Integer, Integer> scores_map = new HashMap<>();// student_score -> student_id
