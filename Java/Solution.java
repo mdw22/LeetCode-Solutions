@@ -1058,4 +1058,90 @@ public class Solution {
         }
         return resultHead.next;
     }
+
+    public int[] nodesBetweenCriticalPoints(ListNode head) {
+        int list_size = 1;
+        List<Integer> critList = new ArrayList<>();
+        int last_value = 0;
+        while(head != null && head.next != null) {
+            ListNode tempHead = head.next; 
+            if(head.val > last_value && head.val > tempHead.val) {
+                critList.add(head.val);
+            } else if(head.val < last_value && head.val < tempHead.val) {
+                critList.add(head.val);
+            }
+            head = head.next;
+            list_size++;
+        }
+        if(list_size < 3) return new int[]{-1, 1};
+        int[] result = new int[critList.size()];
+        for(int i = 0; i < critList.size(); ++i) {
+            result[i] = critList.get(i);
+        }
+        return result;
+    }
+
+    public int passThePillow(int n, int time) {
+        // pillow is passed a full lap
+        while(time > (n-1) * 2) {
+            time -= (n - 1) * 2;
+        }
+        boolean wayFlag = false; // left to right is false, right to left is true
+        while(time > (n - 1)) {
+            time -= n - 1;
+            wayFlag = !wayFlag;
+        }
+        if(!wayFlag) {
+            return 1 + time;
+        } else {
+            return n - time;
+        }
+    }
+
+    
+
+    public List<Integer> topStudents(String[] positive_feedback, String[] negative_feedback, String[] report, int[] student_id, int k) {
+        List<String> feedback_list = new ArrayList<>();
+        Map<Integer, Integer> scores_map = new HashMap()<>();// student_score -> student_id
+        for(String str : positive_feedback) {
+            feedback_list.add(str);
+        }
+        for(String str : negative_feedback) {
+            feedback_list.add(str);
+        }
+        int[] scores = new int[student_id.length];
+        for(int i = 0; i < student_id.length; ++i) {
+            String student_report = report[i];
+            int student_score = 0;
+            for(String feedback : feedback_list) {
+                if(student_report.contains(feedback)) {
+                    if(feedback_list.indexOf(feedback) < positive_feedback.length) {
+                        student_score += 3;
+                    } else if(feedback_list.indexOf(feedback) >= positive_feedback.length) {
+                        student_score--;
+                    }
+                }
+            }
+            while(scores_map.get(student_score) != null) {
+                student_score--;
+            }
+            scores_map.put(student_score, student_id[i]);
+            scores[i] = student_score;
+        }
+        List<Integer> result_list = new ArrayList<>();
+        Arrays.sort(scores);
+        for(int i = 0; i < k; ++i) {
+            result_list.add(scores_map.get(scores[scores.length - i - 1])); 
+        }
+        return result_list;
+    }
+
+    public int numWaterBottles(int numBottles, int numExchange) {
+        int result = numBottles;
+        while(numBottles >= numExchange) {
+            result += numBottles / numExchange;
+            numBottles = (numBottles / numExchange) + (numBottles % numExchange);
+        }
+        return result;
+    }
 }
